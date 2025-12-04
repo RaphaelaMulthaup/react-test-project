@@ -1,3 +1,8 @@
+.main-container {
+    display: flex;
+    padding-right: 32px;
+}
+
 .product-container {
     display: flex;
     gap: 32px;
@@ -8,4 +13,8 @@
     .product-container {
         flex-direction: column;
     }
+}
+
+.shopping-cart {
+    min-width: 25vw;
 }
