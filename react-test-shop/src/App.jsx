@@ -21,7 +21,7 @@ class App extends Component {
   deleteItem = (name) => {
     let currentItems = this.state.items;
     let itemsWithoutTheDeleted = currentItems.filter(
-      (item) => item.namme != name
+      (item) => item.name != name
     );
     this.setState({ items: itemsWithoutTheDeleted });
   };
