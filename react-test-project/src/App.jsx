@@ -9,7 +9,12 @@ class App extends Component {
   };
   addItem = (amount, name, price) => {
     let currentItems = this.state.items;
-    currentItems.push({ amount, name, price });
+    let existingItem = currentItems.find((item) => item.name === name);
+    if (existingItem) {
+      existingItem.amount++;
+    } else {
+      currentItems.push({ amount, name, price });
+    }
     this.setState({ items: currentItems });
     console.log(this.state);
   };
