@@ -25,6 +25,12 @@ class App extends Component {
     );
     this.setState({ items: itemsWithoutTheDeleted });
   };
+  changeAmount = (name, change) => {
+    let currentItems = this.state.items;
+    let itemToChangeAmount = currentItems.find(item => item.name === name)
+    itemToChangeAmount.amount += change;
+    this.setState({ items: currentItems });
+  };
   render() {
     return (
       <React.Fragment>
