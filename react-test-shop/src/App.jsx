@@ -13,13 +13,17 @@ class App extends Component {
       { name: "Paprika", price: 2.0, description: "Text über Paprika" },
     ],
   };
-  addItem = (amount, name, price) => {
+  addItem = (product) => {
     let currentItems = this.state.items;
-    let existingItem = currentItems.find((item) => item.name === name);
+    let existingItem = currentItems.find((item) => item.name === product.name);
     if (existingItem) {
       existingItem.amount++;
     } else {
-      currentItems.push({ amount, name, price });
+      currentItems.push({
+        amount: 1,
+        name: product.name,
+        price: product.price,
+      });
     }
     this.setState({ items: currentItems });
     console.log(this.state);
@@ -49,7 +53,7 @@ class App extends Component {
           <div className="product-container">
             {this.state.products.map((product) => (
               <Product
-                onAdd={() => this.addItem(1, product.name, product.price)}
+                onAdd={() => this.addItem(product)}
                 title={product.name}
                 description={product.description}
               />
