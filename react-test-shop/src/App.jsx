@@ -14,19 +14,36 @@ class App extends Component {
     ],
   };
   addItem = (product) => {
-    let currentItems = this.state.items;
-    let existingItem = currentItems.find((item) => item.name === product.name);
-    if (existingItem) {
-      existingItem.amount++;
-    } else {
-      currentItems.push({
-        amount: 1,
-        name: product.name,
-        price: product.price,
+    this.setState((prevState) => {
+      const updatedItems = prevState.items.map((item) => {
+        if (item.name === product.name) {
+          return { ...item, amount: item.amount + 1 };
+        }
+        return item;
       });
-    }
-    this.setState({ items: currentItems });
-    console.log(this.state);
+      const exists = prevState.items.some((item) => item.name === product.name);
+      return {
+        items: exists
+          ? updatedItems
+          : [
+              ...prevState.items,
+              { amount: 1, name: product.name, price: product.price },
+            ],
+      };
+    });
+    // let currentItems = this.state.items;
+    // let existingItem = currentItems.find((item) => item.name === product.name);
+    // if (existingItem) {
+    //   existingItem.amount++;
+    // } else {
+    //   currentItems.push({
+    //     amount: 1,
+    //     name: product.name,
+    //     price: product.price,
+    //   });
+    // }
+    // this.setState({ items: currentItems });
+    // console.log(this.state);
   };
   deleteItem = (name) => {
     let currentItems = this.state.items;
@@ -53,31 +70,12 @@ class App extends Component {
           <div className="product-container">
             {this.state.products.map((product) => (
               <Product
+                key={product.name}
                 onAdd={() => this.addItem(product)}
                 title={product.name}
                 description={product.description}
               />
             ))}
-            {/* <Product
-              onAdd={() => this.addItem(1, "Tomaten", 2.5)}
-              title="Tomaten"
-              description="Text über Tomaten"
-            />{" "}
-            <Product
-              onAdd={() => this.addItem(1, "Gurken", 3.0)}
-              title="Gurken"
-              description="Text über Gurken"
-            />{" "}
-            <Product
-              onAdd={() => this.addItem(1, "Karotten", 1.5)}
-              title="Karotten"
-              description="Text über Karotten"
-            />{" "}
-            <Product
-              onAdd={() => this.addItem(1, "Paprika", 2.0)}
-              title="Paprika"
-              description="Text über Paprika"
-            /> */}
           </div>
           <ShoppingCart
             onChange={this.changeAmount}
