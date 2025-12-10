@@ -7,39 +7,47 @@ class FormNewProduct extends Component {
     description: "",
     imageUrl: "",
   };
-  setValue = (key, value) => {
-    this.setState((prevState) => ({
-      ...prevState,
-      [key]: value,
-    }));
+
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
   };
+
   render() {
     const { name, price, description, imageUrl } = this.state;
     return (
-    <form action="">
-      <input
-        value={name}
-        onChange={(e) => this.setValue("name", e.target.value)}
-        type="text"
-      />
-      <input
-        value={price}
-        onChange={(e) => this.setValue("price", e.target.value)}
-        type="number"
-      />
+      <form>
+        <input
+          name="name"
+          value={name}
+          onChange={this.handleChange}
+          type="text"
+        />
 
-      <input
-        value={description}
-        onChange={(e) => this.setValue("description", e.target.value)}
-        type="text"
-      />
+        <input
+          name="price"
+          value={price}
+          onChange={this.handleChange}
+          type="number"
+        />
 
-      <input
-        value={imageUrl}
-        onChange={(e) => this.setValue("imageUrl", e.target.value)}
-        type="text"
-      />
-    </form>);
+        <input
+          name="description"
+          value={description}
+          onChange={this.handleChange}
+          type="text"
+        />
+
+        <input
+          name="imageUrl"
+          value={imageUrl}
+          onChange={this.handleChange}
+          type="text"
+        />
+      </form>
+    );
   }
 }
 
