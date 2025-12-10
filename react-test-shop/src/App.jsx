@@ -13,6 +13,7 @@ class App extends Component {
       { name: "Paprika", price: 2.0, description: "Text über Paprika" },
     ],
   };
+
   addItem = (product) => {
     this.setState((prevState) => {
       const updatedItems = prevState.items.map((item) => {
@@ -31,20 +32,8 @@ class App extends Component {
             ],
       };
     });
-    // let currentItems = this.state.items;
-    // let existingItem = currentItems.find((item) => item.name === product.name);
-    // if (existingItem) {
-    //   existingItem.amount++;
-    // } else {
-    //   currentItems.push({
-    //     amount: 1,
-    //     name: product.name,
-    //     price: product.price,
-    //   });
-    // }
-    // this.setState({ items: currentItems });
-    // console.log(this.state);
   };
+
   deleteItem = (name) => {
     let currentItems = this.state.items;
     let itemsWithoutTheDeleted = currentItems.filter(
@@ -52,6 +41,7 @@ class App extends Component {
     );
     this.setState({ items: itemsWithoutTheDeleted });
   };
+
   changeAmount = (name, change) => {
     let currentItems = this.state.items;
     let itemToChangeAmount = currentItems.find((item) => item.name === name);
@@ -62,6 +52,7 @@ class App extends Component {
       this.setState({ items: currentItems });
     }
   };
+  
   render() {
     return (
       <React.Fragment>
