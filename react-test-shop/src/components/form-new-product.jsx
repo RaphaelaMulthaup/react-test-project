@@ -6,7 +6,7 @@ class FormNewProduct extends Component {
       name: "",
       price: "",
       description: "",
-      imageUrl: "",
+
     },
   };
 
@@ -20,11 +20,17 @@ class FormNewProduct extends Component {
     }));
   };
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { newProduct } = this.state;
+    this.props.onSubmit(newProduct);
+  };
+
   render() {
-    const { name, price, description, imageUrl } = this.state.newProduct;
+    const { name, price, description } = this.state.newProduct;
 
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <label>
           <span className="label">Produktname:</span>
 
@@ -61,18 +67,8 @@ class FormNewProduct extends Component {
           />
         </label>
 
-        <label>
-          <span className="label">Bild-URL:</span>
 
-          <input
-            name="imageUrl"
-            value={imageUrl}
-            onChange={this.handleChange}
-            type="text"
-            placeholder="z. B. /images/apfelsaft.png oder https://..."
-          />
-        </label>
-        <button></button>
+        <button type="submit">Produkt hinzufügen</button>
       </form>
     );
   }

@@ -54,6 +54,19 @@ class App extends Component {
     }
   };
 
+  addNewProduct = (newProduct) => {
+    this.setState((prevState) => {
+      const exists = prevState.products.some(
+        (product) => product.name === newProduct.name
+      );
+      if (exists) return prevState; // oder: kein Update notwendig
+
+      return {
+        products: [...prevState.products, newProduct],
+      };
+    });
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -70,7 +83,7 @@ class App extends Component {
                 />
               ))}
             </div>
-            <FormNewProduct />
+            <FormNewProduct onSubmit={this.addNewProduct} />
           </div>
           <ShoppingCart
             onChange={this.changeAmount}
