@@ -7,9 +7,11 @@ class FormNewProduct extends Component {
       price: "",
       description: "",
     },
-    error: null,
-    nameMissing: null,
-    incorrectPrice: null,
+    errors: {
+      error: null,
+      nameMissing: null,
+      incorrectPrice: null,
+    },
   };
 
   handleChange = (e) => {
@@ -25,42 +27,32 @@ class FormNewProduct extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     const { newProduct } = this.state;
-    const nameEntered = newProduct.name != "";
-    if (!nameEntered) {
-      this.setState({
-        nameMissing: "Trage einen Namen ein.",
-      });
-      return;
+    let errors = {};
+
+    if (!newProduct.name.trim()) {
+      errors.nameMissing = "Trage einen Namen ein.";
     } else {
-      this.setState({
-        nameMissing: null,
-      });
+      errors.nameMissing = null;
     }
-    const priceLowerZero = newProduct.price <= 0;
-    if (priceLowerZero) {
-      this.setState({
-        incorrectPrice: "Trage einen Preis ein, der größer als null ist.",
-      });
-      return;
+
+    if (newProduct.price <= 0) {
+      errors.incorrectPrice = "Trage einen Preis ein, der größer als null ist.";
     } else {
-      this.setState({
-        incorrectPrice: null,
-      });
+      errors.incorrectPrice = null;
     }
+
     const exists = this.props.existingProducts.some(
       (product) => product.name === newProduct.name
     );
     if (exists) {
-      this.setState({
-        error: "Ein Produkt mit diesem Namen existiert bereits.",
-      });
-      return;
+      errors.error = "Ein Produkt mit diesem Namen existiert bereits.";
     } else {
-      this.setState({
-        error: null,
-      });
+      errors.error = null;
     }
-
+    this.setState(errors);
+    if (Object.values(errors).some((value) => value !== null)) {
+      return;
+    }
     this.props.onSubmit(newProduct);
     this.setState({
       newProduct: { name: "", price: "", description: "", imageUrl: "" },
